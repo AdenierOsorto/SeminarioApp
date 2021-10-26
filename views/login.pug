@@ -1,0 +1,20 @@
+extends base.pug
+block title 
+    title Sign In
+block head
+    link(rel="stylesheet", href="css/signin.css")
+block container
+    main.form-signin.text-center
+        form
+            img.mb-4(src='img/bootstrap-logo.svg' alt='' width='72' height='57')
+            h1.h3.mb-3.fw-normal Please sign in
+            .form-floating
+                input#floatingInput.form-control(type='email' placeholder='name@example.com' name="username")
+                label(for='floatingInput') Username
+            .form-floating
+                input#floatingPassword.form-control(type='password' placeholder='Password' name="password")
+                label(for='floatingPassword') Password
+            
+            button.w-100.btn.btn-lg.btn-primary(type='submit') Sign in
+            a.w-100.btn.btn-lg.btn-success.mt-1(href='/register') Register
+        

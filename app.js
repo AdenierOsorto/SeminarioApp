@@ -16,8 +16,12 @@ app.set('view engine','pug');
 // Definir la ubicación de los archivos publicos
 app.use(express.static('public'));
 
+// configuracion para procesar los formularios
+app.use(express.urlencoded({extended:true}));
+app.use(express.json());
 //Routers
 app.use('/', router);
+
 
 
 
