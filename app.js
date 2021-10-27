@@ -3,6 +3,7 @@
 import './loadEnv.js';
 import express from 'express';
 import router  from './routes/routes.js';
+import session from 'express-session';
 // puerto deonde esucha express
 const port = 11000;
 
@@ -11,6 +12,15 @@ const app = express();
 
 //definir el sistema de vistas (plantillas) a utilizar
 app.set('view engine','pug');
+
+//configurar el manejo de sessiones en la app
+
+const oneDay = 54 * 60 * 60 * 1000;
+
+app.use(session({
+    secret: process.env.SESSION_SECRET
+    
+}))
 
 
 // Definir la ubicación de los archivos publicos

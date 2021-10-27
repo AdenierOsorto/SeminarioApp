@@ -11,7 +11,7 @@ export const  register  = async (req, res) => {
         username: username,
         password: hash,
         fullname: fullname
-    }
+    };
 
     // construir el query 
     // consultas preparadas
@@ -24,6 +24,22 @@ export const  register  = async (req, res) => {
     });
 }
 
-export const login = (req, res) => {
-    
+export const login = async (req, res) => {
+    const {username, password} = req.body;
+
+    // const hash = await bcryptjs.hash(password, 8);
+    if(!username || !password){
+        res.render('login');
+        return;
+    }
+
+    // query a la base de datos, para saber si exiiste el usuario
+    cnn.query("select * from users where username = ?",[username], async (err,result)=>{
+        
+        if(result.length === 0 || !(await bcryptjs.compare(password, result[0].password))){
+            res.render('login');
+            return;
+        }
+    });
+    // console.log(username, password);
 }
