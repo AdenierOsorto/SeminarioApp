@@ -1,5 +1,8 @@
 import cnn from '../database/connection.js';
 import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken'
+
+var session;
 export const  register  = async (req, res) => {
     const {fullname, username, password} = req.body;
 
@@ -40,6 +43,25 @@ export const login = async (req, res) => {
             res.render('login');
             return;
         }
+
+        const id = result[0].id;
+        const token = jwt.sign({id: id}, process.env.JWT_SECRET,{
+            expiresIn: process.env.SESSION_EXPIRATION
+        });
+        //guardar en la sesión el token generado
+        req.session.token = token;
+
+        // el user y password son correctos, podemos continuar
+        res.render('/');
     });
     // console.log(username, password);
 }
+// creando un middleware para proteger las URL que necesitan inicio de sesion
+export const isAuthenticated = (req, res, next) =>{
+    next();
+};
+
+export const logger = (req, res, next)=>{
+    console.log(req.path, req.method);
+    next();
+};
