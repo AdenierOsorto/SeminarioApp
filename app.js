@@ -3,7 +3,7 @@
 import './loadEnv.js';
 import express from 'express';
 import router  from './routes/routes.js';
-import sessions from 'express-session';
+import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import { logger } from './controllers/authController.js';
 // puerto deonde esucha express
@@ -19,7 +19,7 @@ app.set('view engine','pug');
 
 const oneDay = 54 * 60 * 60 * 1000;
 
-app.use(sessions({
+app.use(session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     resave: false,
